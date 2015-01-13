@@ -12,11 +12,10 @@ import android.view.SurfaceView;
  * Created by yasser on 1/13/2015.
  */
 public class GameView extends SurfaceView {
+    private Sprite sprite;
     private Bitmap bmp;
     private SurfaceHolder holder;
     private GameLoopThread gameLoopThread;
-    private int xSpeed = 10;
-    private int x = 0;
 
     public GameView(Context context)
     {
@@ -37,28 +36,23 @@ public class GameView extends SurfaceView {
 
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
-                boolean retry = true;
                 gameLoopThread.setRunning(false);
-                while (retry){
+                while (true){
                     try {
                         gameLoopThread.join();
-                        retry = false;
+                        break;
                     } catch(InterruptedException e) {
                     }
                 }
             }
         });
-        bmp = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
+        bmp = BitmapFactory.decodeResource(getResources(), R.drawable.good1);
+        sprite = new Sprite(this, bmp);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        if(x >= getWidth() - bmp.getWidth())
-            xSpeed = -10;
-        if(x < 10)
-            xSpeed = 10;
-        x = x + xSpeed;
-        canvas.drawColor(Color.GREEN);
-        canvas.drawBitmap(bmp, x ,10 , null);
+        canvas.drawColor(Color.RED);
+        sprite.onDraw(canvas);
     }
 }

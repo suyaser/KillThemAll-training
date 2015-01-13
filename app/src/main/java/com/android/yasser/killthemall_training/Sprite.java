@@ -25,8 +25,9 @@ public class Sprite {
     private int currentFrame;
     private int y;
     private int ySpeed;
+    private boolean isBad;
 
-    public Sprite(GameView gameView, Bitmap bmp){
+    public Sprite(GameView gameView, Bitmap bmp, boolean bool){
         this.gameView = gameView;
         this.bmp = bmp;
         this.width = bmp.getWidth() / BMP_COLUMNS;
@@ -36,6 +37,7 @@ public class Sprite {
         y = rnd.nextInt(gameView.getHeight() - height);
         xSpeed = rnd.nextInt(10)-5;
         ySpeed = rnd.nextInt(10)-5;
+        isBad = bool;
     }
 
     private void update(){
@@ -48,6 +50,10 @@ public class Sprite {
         }
         y = y + ySpeed;
         currentFrame = ++currentFrame % BMP_COLUMNS;
+    }
+
+    public boolean isBad() {
+        return isBad;
     }
 
     public void onDraw(Canvas canvas){

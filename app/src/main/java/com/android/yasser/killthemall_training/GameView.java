@@ -13,6 +13,7 @@ import android.view.SurfaceView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by yasser on 1/13/2015.
@@ -29,6 +30,13 @@ public class GameView extends SurfaceView {
     private List<Sprite> sprites = new ArrayList<Sprite>();
     private long lastClick;
     private List<TempSprite> temps = new ArrayList<TempSprite>();
+    private int[] zprites = {R.drawable.bad1,
+            R.drawable.bad2,R.drawable.bad3,
+            R.drawable.bad4,R.drawable.bad5,
+            R.drawable.bad6,R.drawable.good1,
+            R.drawable.good2,R.drawable.good3,
+            R.drawable.good4,R.drawable.good5,
+            R.drawable.good6};
 
     public GameView(Context context) {
         super(context);
@@ -67,18 +75,11 @@ public class GameView extends SurfaceView {
 
 
     private void createSprites() {
-        sprites.add(createSprite(R.drawable.bad1, true));
-        sprites.add(createSprite(R.drawable.bad2, true));
-        sprites.add(createSprite(R.drawable.bad3, true));
-        sprites.add(createSprite(R.drawable.bad4, true));
-        sprites.add(createSprite(R.drawable.bad5, true));
-        sprites.add(createSprite(R.drawable.bad6, true));
-        sprites.add(createSprite(R.drawable.good1, false));
-        sprites.add(createSprite(R.drawable.good2, false));
-        sprites.add(createSprite(R.drawable.good3, false));
-        sprites.add(createSprite(R.drawable.good4, false));
-        sprites.add(createSprite(R.drawable.good5, false));
-        sprites.add(createSprite(R.drawable.good6, false));
+        for(int i = 0; i<50; i++){
+            Random r = new Random();
+            int x = r.nextInt(11);
+            sprites.add(createSprite(zprites[x], x<6));
+        }
     }
 
     private Sprite createSprite(int resource, boolean bool) {

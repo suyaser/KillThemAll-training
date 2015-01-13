@@ -21,9 +21,9 @@ public class Sprite {
     private GameView gameView;
     private Bitmap bmp;
     private int xSpeed;
-    private int x = 0;
+    private int x;
     private int currentFrame;
-    private int y = 0;
+    private int y;
     private int ySpeed;
 
     public Sprite(GameView gameView, Bitmap bmp){
@@ -32,6 +32,8 @@ public class Sprite {
         this.width = bmp.getWidth() / BMP_COLUMNS;
         this.height = bmp.getHeight() / BMP_ROWS;
         Random rnd = new Random();
+        x = rnd.nextInt(gameView.getWidth() - width);
+        y = rnd.nextInt(gameView.getHeight() - height);
         xSpeed = rnd.nextInt(10)-5;
         ySpeed = rnd.nextInt(10)-5;
     }
@@ -57,7 +59,7 @@ public class Sprite {
         canvas.drawBitmap(bmp, src, dst, null);
     }
 
-    // direction = 0 up, 1 left, 2 down, 3 right,
+    // direction = 0 up, 1 left, 2 down, 3 right,s
     // animation = 3 back, 1 left, 0 front, 2 right
     private int getAnimationRow() {
         double dirDouble = (Math.atan2(xSpeed, ySpeed) / (Math.PI / 2) + 2);
@@ -65,4 +67,7 @@ public class Sprite {
         return DIRECTION_TO_ANIMATION_MAP[direction];
     }
 
+    public boolean isCollision(float x2, float y2) {
+        return x2 > x && x2 < x + width && y2 > y && y2 < y + height;
+    }
 }
